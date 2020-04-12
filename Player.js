@@ -42,53 +42,6 @@
     }
 */
 
-const playerAttribs = [
-  {
-    name: "Jet",
-    health: 100,
-    mana: 100,
-    recover: {
-      hp: 5,
-      mp: 5,
-    },
-    moves: 2,
-    dmg: 20,
-    block: 15,
-    actions: ["punch", "kick", "uppercut"],
-    abilities: ["recover", "block", "flex", "focus"],
-    str: 0,
-    dex: 0,
-    tempStr: 0,
-    tempDex: 0,
-    vulnerable: false,
-    weak: false,
-    frail: false,
-  },
-  {
-    name: "Faetheon",
-    health: 100,
-    mana: 100,
-    recover: {
-      hp: 5,
-      mp: 5,
-    },
-    moves: 2,
-    dmg: 20,
-    block: 15,
-    actions: ["punch", "kick", "uppercut"],
-    abilities: ["recover", "block", "flex", "focus"],
-    str: 0,
-    dex: 0,
-    tempStr: 0,
-    tempDex: 0,
-    vulnerable: false,
-    weak: false,
-    frail: false,
-  },
-];
-
-const players = playerAttribs.map((stats) => new Player(stats).assignStats());
-
 class Player {
   constructor(attributes) {
     this.attributes = attributes;
@@ -99,6 +52,7 @@ class Player {
     for (let i = 0; i < keys.length; i++) {
       this[keys[i]] = this.attributes[keys[i]];
     }
+    return this;
   };
 
   endTurn = () => {
@@ -115,7 +69,7 @@ class Player {
   };
 
   getBlock = () => {
-    return this.block + this.dex + this.tempDex;
+    return this.blockAmount + this.dex + this.tempDex;
   };
 
   useAttack = (attack) => {
@@ -136,7 +90,7 @@ class Player {
         default:
           dmgAndBlock = "Invalid move";
       }
-      if (--this.moves === 0) {
+      if (--this.actions === 0) {
         this.endTurn();
       }
       return dmgAndBlock;
@@ -147,7 +101,7 @@ class Player {
     if (ability === undefined) {
       return "Invalid ability";
     } else {
-      if (--this.moves === 0) {
+      if (--this.actions === 0) {
         this.endTurn();
       }
       let dmgAndBlock;
@@ -172,13 +126,5 @@ class Player {
       }
       return dmgAndBlock;
     }
-  };
-
-  attackPlayer = (attack) => {
-    playerTurn = 0;
-    playerTarget = 1;
-    let dmgAndBlock = this.useAttack(attack);
-    players[playerTurn].block += dmgAndBlock[1];
-    players[playerTarget].health -= dmgAndBlock[0];
   };
 }
