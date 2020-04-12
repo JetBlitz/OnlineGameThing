@@ -1,0 +1,23 @@
+#combat-info {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+
+#attacker {
+  display: flex;
+  flex-flow: column;
+}
+
+#attacker-stats {
+  display: flex;
+}
+
+#defender {
+  display: flex;
+}
+
+#defender-stats {
+  display: flex;
+}
