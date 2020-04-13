@@ -88,7 +88,7 @@ class Player {
           dmgAndBlock = [this.getDmg(), 0, "vulnerable"];
           break;
         default:
-          dmgAndBlock = "Invalid move";
+          return "Invalid move";
       }
       if (--this.actions === 0) {
         this.endTurn();
@@ -122,7 +122,7 @@ class Player {
           this.health += this.recover.hp;
           this.mana += this.recover.mp;
         default:
-          dmgAndBlock = "Invalid ability";
+          return "Invalid ability";
       }
       return dmgAndBlock;
     }
