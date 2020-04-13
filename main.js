@@ -98,8 +98,8 @@ window.onload = () => {
       console.log(attack);
       const attacker = players[currentPlayer];
       const defender = players[nextPlayer];
-      if (attacker.actions > 0) {
-        let dmgAndBlock = attacker.useAttack(attack);
+      let dmgAndBlock = attacker.useAttack(attack);
+      if (attacker.actions > 0 && Array.isArray(dmgAndBlock)) {
         console.log(dmgAndBlock);
         if (defender.currentBlock > 0) {
           if (dmgAndBlock[0] - defender.currentBlock > 0) {
@@ -128,8 +128,10 @@ window.onload = () => {
   $root.append(
     createButton("end-turn", "click", "End turn", (e) => {
       const attacker = players[currentPlayer];
-      // const defender = players[nextPlayer];
-      if (attacker.actions > 0) {
+      const defender = players[nextPlayer];
+      if (defender.health <= 0) {
+        alert(`${attacker.name} wins!`);
+      } else if (attacker.actions > 0) {
         alert("You still have actions left.");
       } else {
         attacker.actions += 2;
