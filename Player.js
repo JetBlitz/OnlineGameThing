@@ -79,7 +79,7 @@ class Player {
       let dmgAndBlock;
       switch (attack) {
         case "punch":
-          dmgAndBlock = [this.getDmg() + Math.ceil(this.dmg / 2), 0];
+          dmgAndBlock = [this.getDmg(), 0];
           break;
         case "kick":
           dmgAndBlock = [this.getDmg(), this.getBlock()];
@@ -115,7 +115,7 @@ class Player {
           dmgAndBlock = "Dexterity up!";
           break;
         case "block":
-          dmgAndBlock = [0, this.getBlock() + Math.ceil(this.block / 2)];
+          dmgAndBlock = [0, this.getBlock()];
           break;
         case "recover":
           dmgAndBlock = `Hp up! (${this.recover.hp}hp recovered) \n Mp up! (${this.recover.mp}mp recovered)`;

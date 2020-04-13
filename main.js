@@ -30,8 +30,10 @@ window.onload = () => {
       Temp Dexterity: ${players[nextPlayer].tempDex}
     `;
     if ($actionInput.value.length > 0) {
-      $actionText.innerText = `You ${$actionInput.value} ${$defenderName.innerText} for ${players[0].useAttack($actionInput.value)[0]
+      $actionText.innerText = `You ${$actionInput.value} ${$defenderName.innerText} for ${players[0].getDmg()
         } damage`
+    } else {
+      $actionText.innerText = `${players[currentPlayer].name}'s turn`
     }
     console.log($actionInput.value.length)
   };
@@ -145,6 +147,7 @@ window.onload = () => {
       } else if (attacker.actions > 0) {
         alert("You still have actions left.");
       } else {
+        $actionInput.value = '';
         attacker.actions += 2;
         currentPlayer ^= nextPlayer;
         nextPlayer ^= currentPlayer;
