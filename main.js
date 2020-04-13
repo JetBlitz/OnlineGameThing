@@ -8,7 +8,7 @@ const createButton = (className, eventName, buttonTitle, eventHandler) => {
 
 window.onload = () => {
   const updateInfoText = () => {
-    console.log(players);
+    // console.log(players);
     $attackerName.innerText = players[currentPlayer].name;
     $attackerStats.innerText = `
       HP: ${players[currentPlayer].health}
@@ -29,6 +29,11 @@ window.onload = () => {
       Dexterity (bonus block): ${players[nextPlayer].dex}
       Temp Dexterity: ${players[nextPlayer].tempDex}
     `;
+    if ($actionInput.value.length > 0) {
+      $actionText.innerText = `You ${$actionInput.value} ${$defenderName.innerText} for ${players[0].useAttack($actionInput.value)[0]
+        } damage`
+    }
+    console.log($actionInput.value.length)
   };
 
   const playerAttribs = [
@@ -90,17 +95,18 @@ window.onload = () => {
   const $attackerStats = document.getElementById("attacker-stats");
   const $defenderName = document.getElementById("defender");
   const $defenderStats = document.getElementById("defender-stats");
+  const $actionText = document.getElementById("action-text");
   updateInfoText();
 
   $root.append(
     createButton("attack-button", "click", "Attack", (e) => {
       const attack = $actionInput.value;
-      console.log(attack);
+      // console.log(attack);
       const attacker = players[currentPlayer];
       const defender = players[nextPlayer];
       if (attacker.actions > 0) {
         let dmgAndBlock = attacker.useAttack(attack);
-        console.log(dmgAndBlock);
+        // console.log(dmgAndBlock);
         if (defender.currentBlock > 0) {
           if (dmgAndBlock[0] - defender.currentBlock > 0) {
             dmgAndBlock[0] -= defender.currentBlock;
