@@ -98,21 +98,26 @@ window.onload = () => {
       console.log(attack);
       const attacker = players[currentPlayer];
       const defender = players[nextPlayer];
-      let dmgAndBlock = attacker.useAttack(attack);
-      if (attacker.actions > 0 && Array.isArray(dmgAndBlock)) {
-        console.log(dmgAndBlock);
-        if (defender.currentBlock > 0) {
-          if (dmgAndBlock[0] - defender.currentBlock > 0) {
-            dmgAndBlock[0] -= defender.currentBlock;
-            defender.currentBlock = 0;
-          } else {
-            defender.currentBlock -= dmgAndBlock[0];
+      let dmgAndBlock;
+      if (attacker.actions > 0) {
+        dmgAndBlock = attacker.useAttack(attack);
+        if (Array.isArray(dmgAndBlock)) {
+          console.log(dmgAndBlock);
+          if (defender.currentBlock > 0) {
+            if (dmgAndBlock[0] - defender.currentBlock > 0) {
+              dmgAndBlock[0] -= defender.currentBlock;
+              defender.currentBlock = 0;
+            } else {
+              defender.currentBlock -= dmgAndBlock[0];
+            }
           }
+          defender.health -= dmgAndBlock[0];
+          attacker.currentBlock += dmgAndBlock[1];
+          updateInfoText();
+        } else {
+          alert(dmgAndBlock);
         }
-        defender.health -= dmgAndBlock[0];
-        attacker.currentBlock += dmgAndBlock[1];
-        updateInfoText();
-      } else {
+      } else if (attacker.actions <= 0) {
         alert("Out of actions, please end your turn.");
       }
     })
