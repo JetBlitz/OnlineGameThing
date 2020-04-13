@@ -8,7 +8,6 @@ const createButton = (className, eventName, buttonTitle, eventHandler) => {
 
 window.onload = () => {
   const updateInfoText = () => {
-    console.log(players);
     $attackerName.innerText = players[currentPlayer].name;
     $attackerStats.innerText = `
       HP: ${players[currentPlayer].health}
@@ -82,7 +81,6 @@ window.onload = () => {
   );
   let currentPlayer = 0;
   let nextPlayer = 1;
-  // updateInfoText.bind(this);
 
   const $root = document.getElementById("root");
   const $actionInput = document.getElementById("action");
@@ -95,14 +93,12 @@ window.onload = () => {
   $root.append(
     createButton("attack-button", "click", "Attack", (e) => {
       const attack = $actionInput.value;
-      console.log(attack);
       const attacker = players[currentPlayer];
       const defender = players[nextPlayer];
       let dmgAndBlock;
       if (attacker.actions > 0) {
         dmgAndBlock = attacker.useAttack(attack);
         if (Array.isArray(dmgAndBlock)) {
-          console.log(dmgAndBlock);
           if (defender.currentBlock > 0) {
             if (dmgAndBlock[0] - defender.currentBlock > 0) {
               dmgAndBlock[0] -= defender.currentBlock;

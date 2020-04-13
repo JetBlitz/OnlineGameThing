@@ -89,6 +89,7 @@ class Player {
           break;
         default:
           dmgAndBlock = "Invalid move";
+          return;
       }
       if (--this.actions === 0) {
         this.endTurn();
@@ -123,6 +124,7 @@ class Player {
           this.mana += this.recover.mp;
         default:
           dmgAndBlock = "Invalid ability";
+          return;
       }
       return dmgAndBlock;
     }
