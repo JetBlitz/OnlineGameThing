@@ -95,9 +95,8 @@ window.onload = () => {
       const attack = $actionInput.value;
       const attacker = players[currentPlayer];
       const defender = players[nextPlayer];
-      let dmgAndBlock;
       if (attacker.actions > 0) {
-        dmgAndBlock = attacker.useAttack(attack);
+        let dmgAndBlock = attacker.useAttack(attack);
         if (Array.isArray(dmgAndBlock)) {
           if (defender.currentBlock > 0) {
             if (dmgAndBlock[0] - defender.currentBlock > 0) {
