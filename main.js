@@ -1,4 +1,4 @@
-const createButton = (className, eventName, buttonTitle, eventHandler) => {
+const createButton = (buttonTitle, eventName, className, eventHandler) => {
   const $button = document.createElement("button");
   $button.className = className;
   $button.innerText = buttonTitle;
@@ -86,6 +86,8 @@ window.onload = () => {
   window.players = playerAttribs.map((stats) =>
     new Player(stats).assignStats()
   );
+  // players.shuffle();
+
   let currentPlayer = 0;
   let nextPlayer = 1;
 
@@ -96,13 +98,15 @@ window.onload = () => {
   const $defenderName = document.getElementById("defender");
   const $defenderStats = document.getElementById("defender-stats");
   const $actionText = document.getElementById("action-text");
+  const $resetMatch = document.getElementById("reset");
   updateInfoText();
 
   $root.append(
-    createButton("attack-button", "click", "Attack", (e) => {
+    createButton("Attack", "click", "attack-button", (e) => {
       const attack = $actionInput.value;
       const attacker = players[currentPlayer];
       const defender = players[nextPlayer];
+
       if (attacker.actions > 0) {
         let dmgAndBlock = attacker.useAttack(attack);
         if (Array.isArray(dmgAndBlock)) {
@@ -123,18 +127,29 @@ window.onload = () => {
       } else if (attacker.actions <= 0) {
         alert("Out of actions, please end your turn.");
       }
+      if (defender.health <= 0) {
+        alert(`${attacker.name} wins!`);
+        const selection = confirm('Would you like to play again?')
+        if (selection) {
+          window.players = playerAttribs.map((stats) =>
+            new Player(stats).assignStats()
+          );
+          // players.shuffle();
+          updateInfoText();
+        }
+      }
     })
   );
 
   $root.append(
-    createButton("ability-button", "click", "Ability", (e) => {
+    createButton("Ability", "click", "ability-button", (e) => {
       const attacker = players[currentPlayer];
       const defender = players[nextPlayer];
     })
   );
 
   $root.append(
-    createButton("end-turn", "click", "End turn", (e) => {
+    createButton("End Turn", "click", "end-turn", (e) => {
       const attacker = players[currentPlayer];
       const defender = players[nextPlayer];
       if (defender.health <= 0) {
@@ -151,6 +166,14 @@ window.onload = () => {
       }
     })
   );
+
+  $root.append(createButton("Reset Match", "click", "reset-match", (e) => {
+    window.players = playerAttribs.map((stats) =>
+      new Player(stats).assignStats()
+    );
+    // players.shuffle();
+    updateInfoText();
+  }))
 };
 
 // attackPlayer = (attack) => {
